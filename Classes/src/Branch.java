@@ -55,5 +55,5 @@ public class Branch {
     public final double getMonthSalary() {
         return this.monthSalary;
     }
-    
+
 }
