@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Branch {
     private List<Employee> employeeList;
-    private List<Purchase> salesList;
+    //private List<Purchase> salesList;
     private List<Item> stockList;
     private double monthSalary;
     private double monthProfit;

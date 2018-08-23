@@ -1,3 +1,4 @@
 enum EmployeeTypes {
-    MANAGER, CASHIER, SELLER;
+    CASHIER, MANAGER, SELLER
+
 }

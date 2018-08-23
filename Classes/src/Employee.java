@@ -1,23 +1,54 @@
 import java.util.Date;
+import java.util.Objects;
 
 public abstract class Employee {
     private int id;
     private String firstName;
     private String lastName;
-    private String title;
-    private Date lastModifiedDate;
+    private String branchName;
     private String extraInfo;
     private double totalHours;
+    private int empCode;
 
-    public Employee(int id, String firstName, String lastName, String title, Date lastModifiedDate, String extraInfo, double totalHours) {
+    public Employee() {}
+
+    public Employee(int id, String firstName, String lastName, String extraInfo, double totalHours, String branchName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.title = title;
-        this.lastModifiedDate = lastModifiedDate;
         this.extraInfo = extraInfo;
         this.totalHours = totalHours;
+        this.branchName = branchName;
+        this.empCode = hashCode();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getId() == employee.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    public void setEmpCode() {
+        this.empCode = hashCode();
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+
+
 
     public int getId() {
         return this.id;
@@ -43,20 +74,8 @@ public abstract class Employee {
         this.lastName = lastName;
     }
 
-    public Date getLastModifiedDate() {
-        return this.lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public int getEmpCode() {
+        return empCode;
     }
 
     public String getExtraInfo() {
