@@ -1,3 +1,5 @@
+package ClientPack;
+
 public class VIPClient extends Client {
     private double discount;
     public VIPClient(int customerID, String firstName, String lastName, String phoneNumber) {

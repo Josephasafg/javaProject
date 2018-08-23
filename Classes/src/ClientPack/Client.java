@@ -1,4 +1,4 @@
-//import org.jetbrains.annotations.Contract;
+package ClientPack;//import org.jetbrains.annotations.Contract;
 import java.util.*;
 
 public abstract class Client {
@@ -7,16 +7,15 @@ public abstract class Client {
     private String lastName;
     private String phoneNumber;
     private int customerID;
-    private int index;
     private Map<Integer, List<String>> purchaseHistory;
     public Client(int customerID, String firstName, String lastName, String phoneNumber) {
         this.customerID = customerID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.index = 1;
+        int index = 1;
         this.purchaseHistory = new HashMap<Integer, List<String>>();
-        this.purchaseHistory.put(this.index, new ArrayList<>());
+        this.purchaseHistory.put(index, new ArrayList<>());
         /* Creating a random customer number. */
         Random rand = new Random();
         this.customerNumber = rand.nextInt(99999) + 1;

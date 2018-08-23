@@ -1,25 +1,34 @@
-import java.util.Date;
+package EmployeePack;
+
 import java.util.Objects;
+
 
 public abstract class Employee {
     private int id;
     private String firstName;
     private String lastName;
-    private String branchName;
+    private int branchNumber;
     private String extraInfo;
     private double totalHours;
     private int empCode;
+    private EmployeeTypes type;
+
 
     public Employee() {}
 
-    public Employee(int id, String firstName, String lastName, String extraInfo, double totalHours, String branchName) {
+    public Employee(int id, String firstName, String lastName, String extraInfo, double totalHours, int branchNumber, EmployeeTypes type) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.extraInfo = extraInfo;
         this.totalHours = totalHours;
-        this.branchName = branchName;
+        this.branchNumber = branchNumber;
         this.empCode = hashCode();
+        this.type = type;
+    }
+
+    public EmployeeTypes getType() {
+        return type;
     }
 
     @Override
@@ -39,16 +48,13 @@ public abstract class Employee {
         this.empCode = hashCode();
     }
 
-    public String getBranchName() {
-        return branchName;
+    public int getBranchNumber() {
+        return branchNumber;
     }
 
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
+    public void setBranchNumber(int branchNumber) {
+        this.branchNumber = branchNumber;
     }
-
-
-
 
     public int getId() {
         return this.id;

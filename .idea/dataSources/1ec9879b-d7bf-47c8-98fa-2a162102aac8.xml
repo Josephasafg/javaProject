@@ -922,62 +922,115 @@
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
     <table id="232" parent="4" name="branch"/>
-    <table id="233" parent="4" name="employee"/>
-    <column id="234" parent="232" name="ID">
+    <table id="233" parent="4" name="client"/>
+    <table id="234" parent="4" name="employee"/>
+    <column id="235" parent="232" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="235" parent="232" name="monthProfit">
+    <column id="236" parent="232" name="monthProfit">
       <Position>2</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="236" parent="232" name="monthSalary">
+    <column id="237" parent="232" name="monthSalary">
       <Position>3</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="237" parent="232" name="PRIMARY">
+    <key id="238" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="238" parent="233" name="id">
+    <column id="239" parent="233" name="customerNumber">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="233" name="firstName">
+    <column id="240" parent="233" name="firstName">
       <Position>2</Position>
       <DataType>linestring|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="233" name="lastName">
+    <column id="241" parent="233" name="lastName">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="242" parent="233" name="phoneNumber">
+      <Position>4</Position>
+      <DataType>linestring|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="243" parent="233" name="customerID">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="244" parent="233" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>customerID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="245" parent="234" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="246" parent="234" name="firstName">
+      <Position>2</Position>
+      <DataType>linestring|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="247" parent="234" name="lastName">
       <Position>3</Position>
       <DataType>linestring|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="241" parent="233" name="empCode">
+    <column id="248" parent="234" name="empCode">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="233" name="branchName">
+    <column id="249" parent="234" name="totalHours">
       <Position>5</Position>
-      <DataType>linestring|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="243" parent="233" name="totalHours">
-      <Position>6</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="233" name="extraInfo">
+    <column id="250" parent="234" name="extraInfo">
+      <Position>6</Position>
+      <DataType>linestring|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="251" parent="234" name="type">
       <Position>7</Position>
       <DataType>linestring|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
+    <column id="252" parent="234" name="branchNumber">
+      <Position>8</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="253" parent="234" name="employee_branch_ID_fk">
+      <ColNames>branchNumber</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="254" parent="234" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>empCode</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="255" parent="234" name="employee_branch_ID_fk">
+      <ColNames>branchNumber</ColNames>
+      <RefSchemaName>javaproject</RefSchemaName>
+      <RefTableName>branch</RefTableName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>
