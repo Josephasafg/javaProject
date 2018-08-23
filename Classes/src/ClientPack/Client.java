@@ -2,17 +2,32 @@ package ClientPack;//import org.jetbrains.annotations.Contract;
 import java.util.*;
 
 public abstract class Client {
+    protected double discount;
     private int customerNumber;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private int customerID;
+    private ClientTypes cType;
     private Map<Integer, List<String>> purchaseHistory;
-    public Client(int customerID, String firstName, String lastName, String phoneNumber) {
+
+    public Client(){}
+
+    public ClientTypes getcType() {
+        return cType;
+    }
+
+    public void setcType(ClientTypes cType) {
+        this.cType = cType;
+    }
+
+    public Client(int customerID, String firstName, String lastName, String phoneNumber, ClientTypes cType, double discount) {
         this.customerID = customerID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.cType = cType;
+        this.discount = discount;
         int index = 1;
         this.purchaseHistory = new HashMap<Integer, List<String>>();
         this.purchaseHistory.put(index, new ArrayList<>());
@@ -21,48 +36,49 @@ public abstract class Client {
         this.customerNumber = rand.nextInt(99999) + 1;
     }
 
-    // TODO: after creating Purchase class, initialize our map
-
-
-    public final int getCustomerNumber() {
-        return this.customerNumber;
+    public int getCustomerNumber() {
+        return customerNumber;
     }
 
-    /* Setting a Customer number doesn't have to be random. */
     public void setCustomerNumber(int customerNumber) {
         this.customerNumber = customerNumber;
     }
 
-    public final int getCustomerID() {
-        return this.customerID;
-    }
-
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
-    public final String getPhoneNumber() {
-        return this.phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public final String getFirstName() {
-        return this.firstName;
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public final String getLastName() {
-        return this.lastName;
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+
+
+
+    // TODO: after creating Purchase class, initialize our map
+
 
 }

@@ -1,14 +1,9 @@
 package ClientPack;
 
 public class VIPClient extends Client {
-    private double discount;
+    private static final double discount = 0.20;
     public VIPClient(int customerID, String firstName, String lastName, String phoneNumber) {
-        super(customerID, firstName, lastName, phoneNumber);
-        this.discount = 0.10;
+        super(customerID, firstName, lastName, phoneNumber,ClientTypes.VIP, discount);
     }
 
-    public static void main(String[] args) {
-        VIPClient p = new VIPClient(4,"asaf", "gardin", "878435");
-        System.out.println(p.getCustomerID());
-    }
 }

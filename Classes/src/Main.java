@@ -8,10 +8,10 @@ import java.sql.DriverManager;
 
 public class Main {
     public static void main(String[] args) {
-        Cashier e1 = new Cashier(1,"asaf","g","",4,"d");
-        Seller s1 = new Seller(5,"a","f","",5,"f");
-        Manager m = new Manager(8,"t","g","",10,"f");
-        Employee e = new Cashier(44,"DUDE", "MAN","",1,"Ocean");
+        Cashier e1 = new Cashier(1,"asaf","g","",4,1);
+        Seller s1 = new Seller(5,"a","f","",5,1);
+        Manager m = new Manager(8,"t","g","",10,2);
+        Employee e = new Cashier(44,"DUDE", "MAN","",1,2);
         m.addEmployeeToDB(e);
     }
 
