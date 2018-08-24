@@ -6,21 +6,18 @@ import Utilities.GlobalLogger;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 
 public class ManagerTools {
     private GlobalLogger log = new GlobalLogger("projectLog.log");
 
-    private static final String driver = "om.mysql.jdbc.Driver";
-    private final Connection url = DriverManager.getConnection
-            ("jdbc:mysql://localhost:3306/JavaProject", "root", "Gard2325");
+    private final String driver = "org.gjt.mm.mysql.Driver";
+    private final Connection url = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaproject", "root", "Gard2325");
 
     public ManagerTools() throws SQLException, IOException {
         try {
+            //Class.forName("com.mysql.jdbc.Driver");
             log.logger.setLevel(Level.INFO);
         }catch(Exception e) {
             throw new IllegalStateException("Cannot connect to MySQL");
@@ -32,7 +29,7 @@ public class ManagerTools {
         try {
             Class.forName(driver);
             log.logger.info("Adding Employee "+ employee + " to Database.");
-            String insert = "INSERT INTO employee(id, firstName, lastName,empCode, totalHours, type, branchNumber)";
+            String insert = "INSERT INTO employee(id, firstName, lastName,empCode, totalHours, type, branchNumber) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement statement = url.prepareStatement(insert);
             statement.setInt(1,employee.getId());
             statement.setString(2,employee.getFirstName());

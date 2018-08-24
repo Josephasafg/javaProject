@@ -26,11 +26,10 @@ public abstract class Employee {
 
     public Employee() {}
 
-    public Employee(int id, String firstName, String lastName, String extraInfo, double totalHours, int branchNumber, EmployeeTypes type) {
+    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.extraInfo = extraInfo;
         this.totalHours = totalHours;
         this.branchNumber = branchNumber;
         this.empCode = hashCode();
@@ -94,14 +93,6 @@ public abstract class Employee {
         return empCode;
     }
 
-    public String getExtraInfo() {
-        return this.extraInfo;
-    }
-
-    public void setExtraInfo(String extraInfo) {
-        this.extraInfo = extraInfo;
-    }
-
     public double getTotalHours() {
         return this.totalHours;
     }
@@ -109,4 +100,5 @@ public abstract class Employee {
     public void setTotalHours(double totalHours) {
         this.totalHours = totalHours;
     }
+
 }

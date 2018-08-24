@@ -10,7 +10,10 @@ import java.sql.DriverManager;
 public class Main {
 
     public static void main(String[] args) {
+        Employee e1 = new Seller(3,"Asaf","Gardin",5.5,1);
+        Manager m1 = new Manager(5,"Josh","Brolin",4.1,1);
+        m1.addEmployeeToDB(e1);
 
     }
-    
+
 }
