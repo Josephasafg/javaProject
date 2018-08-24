@@ -3,30 +3,23 @@ import java.util.Date;
 public class Item {
 
     private int id;
-
     private String name;
-
     private String rackNum;
-
     private int currentQuantity;
-
     private int originalQuantity;
-
     private String barcode;
-
     private String vendor;
-
     private Date purchaseDate;
-
     private Date addedDate;
-
-    private Date lastModifiedDate;
-
     private String purchaseOrderNo;
+    private double cost;
 
-    private int cost;
 
 
+
+    public void purchase() {
+        currentQuantity--;
+    }
 
     public String getPurchaseOrderNo() {
         return this.purchaseOrderNo;
@@ -35,16 +28,6 @@ public class Item {
     public void setPurchaseOrderNo(String purchaseOrderNo) {
         this.purchaseOrderNo = purchaseOrderNo;
     }
-
-
-    public Date getLastModifiedDate() {
-        return this.lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
 
     public Date getPurchaseDate() {
         return this.purchaseDate;
@@ -118,7 +101,7 @@ public class Item {
         this.originalQuantity = originalQuantity;
     }
 
-    public int getCost() {
+    public double getCost() {
         return this.cost;
     }
 
@@ -126,7 +109,7 @@ public class Item {
         this.cost = cost;
     }
 
-    public int getRetail() {
+    public double getRetail() {
         return this.cost;
     }
 

@@ -11,6 +11,16 @@ public abstract class Employee {
     private String extraInfo;
     private double totalHours;
     private int empCode;
+    private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     private EmployeeTypes type;
 
 

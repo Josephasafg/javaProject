@@ -6,18 +6,20 @@ import java.util.List;
 
 
 public class Branch {
-    private List<Employee> employeeList;
+    //private List<Employee> employeeList;
     //private List<Purchase> salesList;
     private List<Item> stockList;
     private double monthSalary;
     private double monthProfit;
     private String address;
+    private String month;
     private int branchID;
     private static int bid = 0;
     private List<String> addressList = new ArrayList<>(Arrays.asList("Beach Front 89", "Oxford Street 5"));
 
     public Branch() {
-        this.employeeList = new ArrayList<Employee>();
+        this.month = "January";
+        //this.employeeList = new ArrayList<Employee>();
         this.monthProfit = 0;
         this.monthSalary = 0;
         this.branchID = ++bid;
