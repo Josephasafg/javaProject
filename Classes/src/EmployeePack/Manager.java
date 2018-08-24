@@ -23,6 +23,10 @@ public class Manager extends Employee {
         managerTools.addEmployee(employee);
     }
 
+    public void delEmployeeFromDB(Employee employee) {
+        managerTools.deleteEmp(employee);
+    }
+
     public void setPassword() {
 
     }

@@ -28,9 +28,12 @@ public class ManagerTools {
         // TODO: make it more secure!
         try {
             Class.forName(driver);
-            log.logger.info("Adding Employee "+ employee + " to Database.");
-            String insert = "INSERT INTO employee(id, firstName, lastName,empCode, totalHours, type, branchNumber) VALUES(?,?,?,?,?,?,?)";
+            log.logger.info("Adding Employee "+ employee.getFirstName() + " to Database.");
+            String insert = "INSERT INTO employee (id, firstName, lastName,empCode, totalHours, type, branchNumber) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement statement = url.prepareStatement(insert);
+            Statement st = url.createStatement();
+            //st.executeUpdate("INSERT INTO employee "+
+                  //  "VALUES(3,'asaf','garin',31,3.33,'c',1)");
             statement.setInt(1,employee.getId());
             statement.setString(2,employee.getFirstName());
             statement.setString(3,employee.getLastName());
@@ -38,17 +41,56 @@ public class ManagerTools {
             statement.setDouble(5,employee.getTotalHours());
             statement.setString(6,employee.getType().name());
             statement.setInt(7,employee.getBranchNumber());
-            log.logger.info("id: "+ employee.getId()+ "\nName: "+employee.getFirstName()+
-                    " " + employee.getLastName()+"\nEmployee Code: "+ employee.getEmpCode()+"\n");
 
+            statement.executeUpdate();
             statement.close();
             url.close();
+            log.logger.info("id: "+ employee.getId()+ "\nName: "+employee.getFirstName()+
+                    " " + employee.getLastName()+"\nEmployee Code: "+ employee.getEmpCode()+"\n");
 
         } catch(SQLException | ClassNotFoundException e) {
             log.logger.severe("Could not add employee "+ employee.getFirstName()+
                     " "+ employee.getLastName()+ " to database");
             e.printStackTrace();
 
+        }
+    }
+
+    public void deleteEmp(Employee employee) {
+        try {
+            Class.forName(driver);
+            log.logger.info("Deleting employee " + employee.getFirstName()
+                    +" "+ employee.getLastName()+"\n");
+            PreparedStatement statement = url.prepareStatement
+                    ("DELETE FROM employee WHERE empCode = ?;");
+            statement.setInt(1,employee.getEmpCode());
+            statement.executeUpdate();
+            statement.close();
+            url.close();
+            log.logger.info("Employee number: "+ employee.getEmpCode()
+                    + " was deleted successfully!");
+
+        } catch (Exception e) {
+            log.logger.severe("Failed to delete employee: #"+ employee.getEmpCode());
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEmployee(Employee employee) {
+        try {
+            Class.forName(driver);
+            log.logger.info("Updating employee number: #"+employee.getEmpCode());
+            PreparedStatement statement = url.prepareStatement("update employee set totalHours = ?" +
+                    "where empCode = ?");
+            statement.setDouble(1, employee.getTotalHours());
+            statement.setInt(2, employee.getEmpCode());
+            statement.executeUpdate();
+            statement.close();
+            url.close();
+            log.logger.info("Successfully updated employee info!");
+        } catch (Exception e) {
+            log.logger.severe("Failed to update employee details");
+            e.printStackTrace();
         }
     }
 
