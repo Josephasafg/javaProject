@@ -13,9 +13,9 @@ public class Manager extends Employee {
         } catch (SQLException | IOException e) { e.printStackTrace();}
     }
 
-    public Manager(){}
+    public Manager() throws IOException{}
 
-    public Manager(int id, String firstName, String lastName, double totalHours,int branchNumber) {
+    public Manager(int id, String firstName, String lastName, double totalHours,int branchNumber) throws  IOException {
         super(id, firstName, lastName, totalHours,branchNumber, EmployeeTypes.MANAGER);
     }
 

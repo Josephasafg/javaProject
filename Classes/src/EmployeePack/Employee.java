@@ -1,9 +1,14 @@
 package EmployeePack;
 
+import Utilities.GlobalLogger;
+
+import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
 
 
 public abstract class Employee {
+    GlobalLogger log = new GlobalLogger("projectLog.log");
     private int id;
     private String firstName;
     private String lastName;
@@ -24,9 +29,13 @@ public abstract class Employee {
     private EmployeeTypes type;
 
 
-    public Employee() {}
+    public Employee() throws IOException {
+        try {
+            log.logger.setLevel(Level.INFO);
+        }catch (Exception e) {throw new IllegalStateException();}
+    }
 
-    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type) {
+    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type) throws IOException {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

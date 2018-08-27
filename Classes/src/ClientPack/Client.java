@@ -1,7 +1,15 @@
 package ClientPack;//import org.jetbrains.annotations.Contract;
+import EmployeePack.Cashier;
+import Shop.Item;
+import Utilities.GlobalLogger;
+
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+
 
 public abstract class Client {
+    private GlobalLogger log = new GlobalLogger("projectLog.log");
     protected double discount;
     private int customerNumber;
     private String firstName;
@@ -11,17 +19,16 @@ public abstract class Client {
     private ClientTypes cType;
     private Map<Integer, List<String>> purchaseHistory;
 
-    public Client(){}
-
-    public ClientTypes getcType() {
-        return cType;
+    public Client() throws IOException {
+        try {
+            log.logger.setLevel(Level.INFO);
+        } catch(Exception e) {
+            throw new IllegalStateException("Cannot write log");
+        }
     }
 
-    public void setcType(ClientTypes cType) {
-        this.cType = cType;
-    }
 
-    public Client(int customerID, String firstName, String lastName, String phoneNumber, ClientTypes cType, double discount) {
+    public Client(int customerID, String firstName, String lastName, String phoneNumber, ClientTypes cType, double discount) throws IOException {
         this.customerID = customerID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,6 +41,15 @@ public abstract class Client {
         /* Creating a random customer number. */
         Random rand = new Random();
         this.customerNumber = rand.nextInt(99999) + 1;
+    }
+
+    public void makePurchase(List<Item> cart) {
+        log.logger.info("Requesting to buy following items: \n");
+        for(int i=0;i<cart.size();i++) {
+            log.logger.info(i+") " + cart.get(i).getName());
+        }
+
+
     }
 
     public int getCustomerNumber() {
@@ -74,6 +90,14 @@ public abstract class Client {
 
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
+    }
+
+    public ClientTypes getcType() {
+        return cType;
+    }
+
+    public void setcType(ClientTypes cType) {
+        this.cType = cType;
     }
 
 

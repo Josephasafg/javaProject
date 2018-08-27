@@ -3,10 +3,12 @@ package EmployeePack;
 import EmployeePack.Employee;
 import EmployeePack.EmployeeTypes;
 
-public class Seller extends Employee {
-    public Seller() {}
+import java.io.IOException;
 
-    public Seller(int id, String firstName, String lastName, double totalHours, int branchNumber) {
+public class Seller extends Employee {
+    public Seller() throws IOException {}
+
+    public Seller(int id, String firstName, String lastName, double totalHours, int branchNumber) throws IOException {
         super(id, firstName, lastName, totalHours, branchNumber, EmployeeTypes.SELLER);
     }
 

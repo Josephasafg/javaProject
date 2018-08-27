@@ -1,3 +1,5 @@
+package Shop;
+
 import EmployeePack.Employee;
 
 import java.util.ArrayList;
@@ -59,4 +61,11 @@ public class Branch {
         return this.monthSalary;
     }
 
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
 }

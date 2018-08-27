@@ -1,3 +1,5 @@
+package Shop;
+
 import java.util.Date;
 
 public class Item {
@@ -116,8 +118,5 @@ public class Item {
     public void setReail(int cost) {
         this.cost = cost;
     }
-
-
-
 
 }
