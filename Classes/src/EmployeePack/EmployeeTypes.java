@@ -1,6 +1,6 @@
 package EmployeePack;
 
-enum EmployeeTypes {
+public enum EmployeeTypes {
     CASHIER, MANAGER, SELLER
 
 }

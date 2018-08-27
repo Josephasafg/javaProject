@@ -1,9 +1,14 @@
 package GUI;
 
+import EmployeePack.Employee;
+import jdk.nashorn.internal.runtime.ECMAException;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class addNewEmployee extends JFrame {
+
     public void addNewEmployee(){
         setTitle("GUI.addNewEmployee");
 
@@ -22,8 +27,7 @@ public class addNewEmployee extends JFrame {
             public void run() {
 
                 JFrame newEmpFrame = new JFrame();
-
-
+                JLabel statusLabel = new JLabel();
                 JPanel jPanel1 = new JPanel();
                 JLabel titel = new JLabel();
                 JLabel IdLabel = new JLabel();
@@ -107,7 +111,7 @@ public class addNewEmployee extends JFrame {
                 update.setText("Update");
                 update.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                       // updateActionPerformed(evt);
+
                     }
                 });
 

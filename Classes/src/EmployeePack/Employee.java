@@ -1,5 +1,6 @@
 package EmployeePack;
 
+import ClientPack.Client;
 import Utilities.GlobalLogger;
 
 import java.io.IOException;
@@ -25,7 +26,6 @@ public abstract class Employee {
     public String getPassword() {
         return password;
     }
-
     private EmployeeTypes type;
 
 
@@ -35,7 +35,7 @@ public abstract class Employee {
         }catch (Exception e) {throw new IllegalStateException();}
     }
 
-    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type) throws IOException {
+    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type, String password) throws IOException {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +43,7 @@ public abstract class Employee {
         this.branchNumber = branchNumber;
         this.empCode = hashCode();
         this.type = type;
+        this.password = password;
     }
 
     public EmployeeTypes getType() {

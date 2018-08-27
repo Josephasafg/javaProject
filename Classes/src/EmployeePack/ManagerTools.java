@@ -31,7 +31,7 @@ public class ManagerTools {
         try {
             Class.forName(driver);
             log.logger.info("Adding Employee "+ employee.getFirstName() + " to Database.");
-            String insert = "INSERT INTO employee (id, firstName, lastName,empCode, totalHours, type, branchNumber) VALUES(?,?,?,?,?,?,?)";
+            String insert = "INSERT INTO employee (id, firstName, lastName,empCode, totalHours, type, branchNumber,password) VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement statement = url.prepareStatement(insert);
             Statement st = url.createStatement();
             statement.setInt(1,employee.getId());
@@ -41,6 +41,7 @@ public class ManagerTools {
             statement.setDouble(5,employee.getTotalHours());
             statement.setString(6,employee.getType().name());
             statement.setInt(7,employee.getBranchNumber());
+            statement.setString(8,employee.getPassword());
 
             statement.executeUpdate();
             statement.close();
