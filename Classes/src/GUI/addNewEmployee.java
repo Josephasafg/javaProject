@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 public class addNewEmployee extends JFrame {
 
@@ -157,7 +158,7 @@ public class addNewEmployee extends JFrame {
                         currentEmployee.setEmpCode();
                         managerTools.addEmployee(currentEmployee);
 
-                        
+                        String[][] data ={Integer.toString(currentEmployee.getId()),}
 
                         }
                     });

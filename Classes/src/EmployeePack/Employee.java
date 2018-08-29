@@ -77,6 +77,22 @@ public abstract class Employee {
         return branchNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "log=" + log +
+                ", id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", branchNumber=" + branchNumber +
+                ", extraInfo='" + extraInfo + '\'' +
+                ", totalHours=" + totalHours +
+                ", empCode=" + empCode +
+                ", password='" + password + '\'' +
+                ", type=" + type +
+                '}';
+    }
+
     public void setBranchNumber(int branchNumber) {
         this.branchNumber = branchNumber;
     }
