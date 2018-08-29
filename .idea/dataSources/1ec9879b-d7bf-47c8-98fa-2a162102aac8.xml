@@ -1035,7 +1035,7 @@
     </column>
     <column id="261" parent="234" name="password">
       <Position>8</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="262" parent="234" name="employee_branch_ID_fk">
