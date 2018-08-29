@@ -39,7 +39,7 @@ public abstract class Employee {
         this.type = type;
     }
 
-    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type, String password) throws IOException {
+    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type) throws IOException {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,7 +47,6 @@ public abstract class Employee {
         this.branchNumber = branchNumber;
         this.empCode = hashCode();
         this.type = type;
-        this.password = password;
     }
 
     public EmployeeTypes getType() {

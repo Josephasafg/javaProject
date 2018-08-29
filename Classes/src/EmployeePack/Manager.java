@@ -15,8 +15,8 @@ public class Manager extends Employee {
 
     public Manager() throws IOException{}
 
-    public Manager(int id, String firstName, String lastName, double totalHours,int branchNumber, String password) throws  IOException {
-        super(id, firstName, lastName, totalHours,branchNumber, EmployeeTypes.MANAGER, password);
+    public Manager(int id, String firstName, String lastName, double totalHours,int branchNumber) throws  IOException {
+        super(id, firstName, lastName, totalHours,branchNumber, EmployeeTypes.MANAGER);
     }
 
     public void addEmployeeToDB(Employee employee) {
