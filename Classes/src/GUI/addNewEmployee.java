@@ -1,11 +1,15 @@
 package GUI;
 
+import DB.DBSingleton;
 import EmployeePack.Employee;
 import jdk.nashorn.internal.runtime.ECMAException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class addNewEmployee extends JFrame {
 
@@ -29,16 +33,18 @@ public class addNewEmployee extends JFrame {
                 JFrame newEmpFrame = new JFrame();
                 JLabel statusLabel = new JLabel();
                 JPanel jPanel1 = new JPanel();
-                JLabel titel = new JLabel();
+                JLabel title = new JLabel();
                 JLabel IdLabel = new JLabel();
                 JLabel mobileLabel = new JLabel();
                 JLabel nameLabel = new JLabel();
-                JLabel adressLabel = new JLabel();
+                JLabel addressLabel = new JLabel();
                 JLabel jLabel6 = new JLabel();
                 JLabel emailLabel = new JLabel();
                 JLabel passLabel = new JLabel();
                 JLabel typeLabel = new JLabel();
-
+                Connection connect;
+                DBSingleton dbSingleton = new DBSingleton();
+                connect = dbSingleton.getConn();
 
                 JTextField jTextField1 = new JTextField();
                 JTextField jTextField2 = new JTextField();
@@ -66,8 +72,8 @@ public class addNewEmployee extends JFrame {
                 typeLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); 
                 typeLabel.setText("User Type");
 
-                titel.setFont(new java.awt.Font("Tahoma", 0, 24)); 
-                titel.setText("Add User Details");
+                title.setFont(new java.awt.Font("Tahoma", 0, 24)); 
+                title.setText("Add User Details");
 
                 IdLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); 
                 IdLabel.setText("User Id");
@@ -78,8 +84,8 @@ public class addNewEmployee extends JFrame {
                 nameLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); 
                 nameLabel.setText("User Name");
 
-                adressLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); 
-                adressLabel.setText("Address");
+                addressLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); 
+                addressLabel.setText("Address");
 
                 emailLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); 
                 emailLabel.setText("Email-Id");
@@ -103,6 +109,12 @@ public class addNewEmployee extends JFrame {
                 anew.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                        // anewActionPerformed(evt);
+                        try {
+                            Statement st = connect.createStatement();
+
+                        } catch (SQLException s) {s.printStackTrace();}
+
+
                     }
                 });
 
@@ -150,7 +162,7 @@ public class addNewEmployee extends JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                         .addGap(35, 35, 35)
-                                                        .addComponent(titel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(anew)
@@ -161,7 +173,7 @@ public class addNewEmployee extends JFrame {
                                                                         .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(mobileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(adressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                        .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                                         .addGap(83, 83, 83)
@@ -191,7 +203,7 @@ public class addNewEmployee extends JFrame {
                                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(titel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(49, 49, 49)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(IdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,7 +222,7 @@ public class addNewEmployee extends JFrame {
                                                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(adressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

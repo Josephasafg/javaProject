@@ -29,7 +29,6 @@ public class employeeLogin extends JFrame {
                 JLabel title = new JLabel();
                 JLabel al1 = new JLabel();
                 JLabel al2 = new JLabel();
-                JLabel SayString = new JLabel();
                 JTextField username = new JTextField();
                 JPasswordField password = new JPasswordField();
                 JButton loginB = new JButton();

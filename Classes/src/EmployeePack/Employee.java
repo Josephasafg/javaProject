@@ -35,6 +35,10 @@ public abstract class Employee {
         }catch (Exception e) {throw new IllegalStateException();}
     }
 
+    public void setType(EmployeeTypes type) {
+        this.type = type;
+    }
+
     public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type, String password) throws IOException {
         this.id = id;
         this.firstName = firstName;
@@ -65,6 +69,9 @@ public abstract class Employee {
 
     public void setEmpCode() {
         this.empCode = hashCode();
+    }
+    public void setEmpCode(int empCode) {
+        this.empCode = empCode;
     }
 
     public int getBranchNumber() {
