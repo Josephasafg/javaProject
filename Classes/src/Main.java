@@ -19,8 +19,8 @@ public class Main {
         }
     }
     public static void main(String[] args) throws IOException {
-        Employee e1 = new Seller(3,"Asaf","Gardin",5.5,1);
-        Manager m1 = new Manager(5,"Josh","Brolin",4.1,1);
+        Employee e1 = new Seller(3,"Asaf","Gardin",5.5,1, "054243432");
+        Manager m1 = new Manager(5,"Josh","Brolin",4.1,1,"0543044054");
         //m1.addEmployeeToDB(e1);
         m1.addEmployeeToDB(m1);
         //m1.delEmployeeFromDB(m1);

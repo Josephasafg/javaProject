@@ -31,7 +31,7 @@ public class ManagerTools {
         try {
             Class.forName(driver);
             log.logger.info("Adding Employee "+ employee.getFirstName() + " to Database.");
-            String insert = "INSERT INTO employee (id, firstName, lastName,empCode, totalHours, type, branchNumber,password) VALUES(?,?,?,?,?,?,?,?)";
+            String insert = "INSERT INTO employee (id, firstName, lastName,empCode, totalHours, type, branchNumber,password,phone) VALUES(?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = url.prepareStatement(insert);
             Statement st = url.createStatement();
             statement.setInt(1,employee.getId());
@@ -42,6 +42,7 @@ public class ManagerTools {
             statement.setString(6,employee.getType().name());
             statement.setInt(7,employee.getBranchNumber());
             statement.setString(8,employee.getPassword());
+            statement.setString(9,employee.getPhone());
 
             statement.executeUpdate();
             statement.close();
@@ -63,8 +64,8 @@ public class ManagerTools {
             log.logger.info("Deleting employee " + employee.getFirstName()
                     +" "+ employee.getLastName()+"\n");
             PreparedStatement statement = url.prepareStatement
-                    ("DELETE FROM employee WHERE empCode = ?;");
-            statement.setInt(1,employee.getEmpCode());
+                    ("DELETE FROM employee WHERE id = ?;");
+            statement.setInt(1,employee.getId());
             statement.executeUpdate();
             statement.close();
             url.close();
@@ -75,6 +76,39 @@ public class ManagerTools {
             log.logger.severe("Failed to delete employee: #"+ employee.getEmpCode());
             e.printStackTrace();
         }
+    }
+
+    public Employee createEmp(String empType){
+        Employee currentEmployee = null;
+        switch (empType) {
+            case "Manager":
+                try {
+                    currentEmployee = new Manager();
+                    currentEmployee.setType(EmployeeTypes.MANAGER);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "Seller":
+                try {
+                    currentEmployee = new Seller();
+                    currentEmployee.setType(EmployeeTypes.SELLER);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "Cashier":
+                try {
+                    currentEmployee = new Cashier();
+                    currentEmployee.setType(EmployeeTypes.CASHIER);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+        return currentEmployee;
     }
 
     public void updateEmployee(Employee employee) {

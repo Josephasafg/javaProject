@@ -2,17 +2,28 @@ package GUI;
 
 import DB.DBSingleton;
 import EmployeePack.*;
+import Utilities.GlobalLogger;
 import jdk.nashorn.internal.runtime.ECMAException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class addNewEmployee extends JFrame {
+    private static GlobalLogger log;
+
+    static {
+        try {
+            log = new GlobalLogger("projectLog.log");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void addNewEmployee(){
         setTitle("GUI.addNewEmployee");
@@ -40,13 +51,36 @@ public class addNewEmployee extends JFrame {
                 JLabel nameLabel = new JLabel();
                 JLabel addressLabel = new JLabel();
                 JLabel jLabel6 = new JLabel();
-                JLabel emailLabel = new JLabel();
+                JLabel branchLabel = new JLabel();
                 JLabel passLabel = new JLabel();
                 JLabel typeLabel = new JLabel();
                 Connection connect;
                 DBSingleton dbSingleton = new DBSingleton();
                 connect = dbSingleton.getConn();
-
+                ArrayList<Employee> employeeList = new ArrayList<Employee>();
+                Employee e = null;
+                try {
+                    PreparedStatement statement = connect.prepareStatement("SELECT * from employee");
+                    ResultSet rs =statement.executeQuery();
+                    while(rs.next()) {
+                        try {
+                            e = new Employee(){};
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        e.setId(rs.getInt("id"));
+                        e.setFirstName(rs.getString("firstName"));
+                        e.setLastName(rs.getString("lastName"));
+                        e.setBranchNumber(rs.getInt("branchNumber"));
+                        e.setPhone(rs.getString("phone"));
+                        e.setTotalHours(rs.getDouble("totalHours"));
+                        e.setType(EmployeeTypes.valueOf(rs.getString("type")));
+                        e.setPassword(rs.getString("password"));
+                        e.setEmpCode(rs.getInt("empCode"));
+                        employeeList.add(e);
+                    }
+                    statement.close();
+                }catch (SQLException s) {s.printStackTrace();}
 
                 JTextField userID = new JTextField();
                 JTextField userFirstName = new JTextField();
@@ -60,8 +94,9 @@ public class addNewEmployee extends JFrame {
                 JButton update = new JButton();
                 JButton del = new JButton();
                 JTable jTable1 = new JTable();
-                JScrollPane jScrollPane1 = new JScrollPane(jTable1);
+                JScrollPane jScrollPane1 = new JScrollPane();
                 jTable1.setFillsViewportHeight(true);
+                String[] columns = {"Id", "First","Last", "Type", "Branch Number", "Phone#"};
 
 
                 jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16));
@@ -89,8 +124,8 @@ public class addNewEmployee extends JFrame {
                 addressLabel.setFont(new java.awt.Font("Tahoma", 0, 16));
                 addressLabel.setText("Last Name");
 
-                emailLabel.setFont(new java.awt.Font("Tahoma", 0, 16));
-                emailLabel.setText("Branch Number");
+                branchLabel.setFont(new java.awt.Font("Tahoma", 0, 16));
+                branchLabel.setText("Branch Number");
 
                 //passLabel.setFont(new java.awt.Font("Tahoma", 0, 16));
                 //passLabel.setText("Password");
@@ -122,43 +157,26 @@ public class addNewEmployee extends JFrame {
                         Employee currentEmployee = null;
 
                         String empType = (String) jComboBox1.getSelectedItem();
-                        switch (empType) {
-                            case "Manager":
-                                try {
-                                    currentEmployee = new Manager();
-                                    currentEmployee.setType(EmployeeTypes.MANAGER);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case "Seller":
-                                try {
-                                    currentEmployee = new Seller();
-                                    currentEmployee.setType(EmployeeTypes.SELLER);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case "Cashier":
-                                try {
-                                    currentEmployee = new Cashier();
-                                    currentEmployee.setType(EmployeeTypes.CASHIER);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                        }
+                        currentEmployee = managerTools.createEmp(empType);
                         currentEmployee.setId(Integer.parseInt(userID.getText()));
                         currentEmployee.setFirstName(userFirstName.getText());
                         currentEmployee.setBranchNumber(Integer.parseInt(userBranch.getText()));
                         currentEmployee.setLastName(userLastName.getText());
                         currentEmployee.setTotalHours(0.0);
                         currentEmployee.setEmpCode();
+                        currentEmployee.setPhone(userPhone.getText());
                         managerTools.addEmployee(currentEmployee);
 
-                        String[][] data ={Integer.toString(currentEmployee.getId()),}
+                        Vector<String> data = new Vector<>();
+                        data.add(Integer.toString(currentEmployee.getId()));
+                        data.add(currentEmployee.getFirstName());
+                        data.add(currentEmployee.getLastName());
+                        data.add(currentEmployee.getType().name());
+                        data.add(Integer.toString(currentEmployee.getBranchNumber()));
+                        data.add(currentEmployee.getPhone());
+
+                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                        model.addRow(data);
 
                         }
                     });
@@ -177,15 +195,49 @@ public class addNewEmployee extends JFrame {
                 del.setText("Delete");
                 del.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            // delActionPerformed(evt);
+                            Employee currentEmployee = null;
+                            ArrayList<String> details = new ArrayList<>();
+                            for(int i =0; i< jTable1.getColumnCount();i++)
+                            {
+                                Object o = jTable1.getValueAt(jTable1.getSelectedRow(),i);
+                                details.add((String) o);
+                            }
+                            ManagerTools managerTools = null;
+                            try {
+                                managerTools = new ManagerTools();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            String emptype = details.get(3).substring(0,1).toUpperCase()+
+                                    details.get(3).substring(1).toLowerCase();
+                            currentEmployee = managerTools.createEmp(emptype);
+                            currentEmployee.setId(Integer.parseInt(details.get(0)));
+                            managerTools.deleteEmp(currentEmployee);
+                            //this line deletes the selected row
+                            ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+                            log.logger.info("Selected row was deleted successfully!");
+
                         }
                     });
 
-                jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                        new Object [][] {},
-                            new String [] {
-                        "Id", "First","Last", "Type", "Branch Number", "Phone#"}
-                ));
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {},columns));
+
+
+                for (int i=0;i<employeeList.size();i++){
+                    Vector<String> data = new Vector<>();
+                    data.add(Integer.toString(employeeList.get(i).getId()));
+                    data.add(employeeList.get(i).getFirstName());
+                    data.add(employeeList.get(i).getLastName());
+                    data.add(employeeList.get(i).getType().name());
+                    data.add(Integer.toString(employeeList.get(i).getBranchNumber()));
+                    data.add(employeeList.get(i).getPhone());
+
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    model.addRow(data);
+                }
+
                 jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
                             // jTable1MouseClicked(evt);
@@ -209,7 +261,7 @@ public class addNewEmployee extends JFrame {
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(anew)
                                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(branchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(IdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,7 +320,7 @@ public class addNewEmployee extends JFrame {
                                                                 .addComponent(userLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(branchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addComponent(userBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

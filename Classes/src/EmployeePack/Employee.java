@@ -19,6 +19,16 @@ public abstract class Employee {
     private int empCode;
     private String password;
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    private String phone;
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -39,7 +49,7 @@ public abstract class Employee {
         this.type = type;
     }
 
-    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type) throws IOException {
+    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type, String phone) throws IOException {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,11 +57,13 @@ public abstract class Employee {
         this.branchNumber = branchNumber;
         this.empCode = hashCode();
         this.type = type;
+        this.phone = phone;
     }
 
     public EmployeeTypes getType() {
         return type;
     }
+
 
     @Override
     public boolean equals(Object o) {
