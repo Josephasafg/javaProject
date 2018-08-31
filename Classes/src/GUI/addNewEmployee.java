@@ -185,8 +185,19 @@ public class addNewEmployee extends JFrame {
                     //update.setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
                 update.setText("Update");
                 update.addActionListener(new java.awt.event.ActionListener() {
+                    // TODO: 31/08/2018 Complete function! 
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-
+                            DefaultTableModel model = new DefaultTableModel();
+                            Employee currentEmployee;
+                            ManagerTools managerTools = null;
+                            model.setColumnIdentifiers(columns);
+                            int i = jTable1.getSelectedRow();
+                            if (i >= 0) {
+                                model.setValueAt(userID.getText(),i,0);
+                                model.setValueAt(userFirstName,i,1);
+                                model.setValueAt(userLastName,i,2);
+                                model.setValueAt(userPhone,i,4);
+                            }
                         }
                     });
 
@@ -225,14 +236,14 @@ public class addNewEmployee extends JFrame {
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {},columns));
 
 
-                for (int i=0;i<employeeList.size();i++){
+                for (Employee anEmployeeList : employeeList) {
                     Vector<String> data = new Vector<>();
-                    data.add(Integer.toString(employeeList.get(i).getId()));
-                    data.add(employeeList.get(i).getFirstName());
-                    data.add(employeeList.get(i).getLastName());
-                    data.add(employeeList.get(i).getType().name());
-                    data.add(Integer.toString(employeeList.get(i).getBranchNumber()));
-                    data.add(employeeList.get(i).getPhone());
+                    data.add(Integer.toString(anEmployeeList.getId()));
+                    data.add(anEmployeeList.getFirstName());
+                    data.add(anEmployeeList.getLastName());
+                    data.add(anEmployeeList.getType().name());
+                    data.add(Integer.toString(anEmployeeList.getBranchNumber()));
+                    data.add(anEmployeeList.getPhone());
 
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
                     model.addRow(data);
