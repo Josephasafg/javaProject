@@ -146,6 +146,7 @@ public class addNewEmployee extends JFrame {
                 anew.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         // anewActionPerformed(evt);
+                        // TODO: 31/08/2018 Add password field in form 
                         ManagerTools managerTools = null;
                         try {
                             managerTools = new ManagerTools();

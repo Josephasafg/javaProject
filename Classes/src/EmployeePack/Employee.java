@@ -2,6 +2,7 @@ package EmployeePack;
 
 import ClientPack.Client;
 import Utilities.GlobalLogger;
+import Utilities.LoginTools;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -49,7 +50,7 @@ public abstract class Employee {
         this.type = type;
     }
 
-    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type, String phone) throws IOException {
+    public Employee(int id, String firstName, String lastName, double totalHours, int branchNumber, EmployeeTypes type, String phone,String password) throws IOException {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -58,6 +59,9 @@ public abstract class Employee {
         this.empCode = hashCode();
         this.type = type;
         this.phone = phone;
+        LoginTools loginTools = new LoginTools();
+        password  = loginTools.encryptedPass(password);
+        this.password = password;
     }
 
     public EmployeeTypes getType() {

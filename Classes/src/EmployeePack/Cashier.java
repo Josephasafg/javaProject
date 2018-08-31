@@ -16,8 +16,8 @@ public class Cashier extends Employee {
 
     public Cashier() throws IOException, SQLException {}
 
-    public Cashier(int id, String firstName, String lastName, double totalHours, int branchNumber, String phone) throws IOException, SQLException {
-        super(id, firstName, lastName, totalHours, branchNumber, EmployeeTypes.CASHIER, phone);
+    public Cashier(int id, String firstName, String lastName, double totalHours, int branchNumber, String phone, String password) throws IOException, SQLException {
+        super(id, firstName, lastName, totalHours, branchNumber, EmployeeTypes.CASHIER, phone, password);
     }
 
     public void clientPurchase() {

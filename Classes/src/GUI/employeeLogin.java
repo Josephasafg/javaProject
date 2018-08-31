@@ -1,9 +1,11 @@
 package GUI;
 
 import DB.DBSingleton;
+import Singleton.Authenticate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,12 +67,16 @@ public class employeeLogin extends JFrame {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         // loginBActionPerformed(evt);
                         try {
+                            // TODO: 31/08/2018 check which type of employee is connecting
+                            Authenticate auth = Authenticate.getInstance();
                             Statement st = connect.createStatement();
                             ResultSet rs = st.executeQuery("select * from employee");
+                            String s = password.getText();
+                            boolean pass = auth.login(Integer.parseInt(username.getText()),s);
 
                             if (rs.next()) {
                                 while (tries[0] != 0) {
-                                    if (rs.getString("empCode").equals(username.getText()) && (rs.getString("password").equals(password.getText()))) {
+                                    if (pass) {
                                         JOptionPane.showMessageDialog(loginFrame, "Connected!");
                                         break;
                                     } else {
@@ -88,6 +94,8 @@ public class employeeLogin extends JFrame {
                                 connect.close();
                             }
                         } catch (SQLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
