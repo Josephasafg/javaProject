@@ -3,6 +3,7 @@ package EmployeePack;
 import ClientPack.Client;
 import EmployeePack.Employee;
 import Shop.Branch;
+import Shop.Item;
 import Utilities.GlobalLogger;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
@@ -128,6 +129,11 @@ public class ManagerTools {
             e.printStackTrace();
         }
     }
+
+    public void addItemToInventory(Item item) {
+
+    }
+
 
     public void addBranch(Branch branch) {
         try {
