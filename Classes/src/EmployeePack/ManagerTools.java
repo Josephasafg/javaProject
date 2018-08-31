@@ -131,6 +131,32 @@ public class ManagerTools {
     }
 
     public void addItemToInventory(Item item) {
+        try {
+            log.logger.info("Adding item: "+ item.getName() + " to DB...");
+            Class.forName(driver);
+            String insert = "INSERT INTO inventory (id, name, rackNum,currentQuantity,originalQuantity, vendor, cost, size)" +
+                    " VALUES(?,?,?,?,?,?,?,?)";
+            PreparedStatement statement = url.prepareStatement(insert);
+            statement.setInt(1,item.getId());
+            statement.setString(2,item.getName());
+            statement.setInt(3,item.getRackNum());
+            statement.setInt(4, item.getCurrentQuantity());
+            statement.setInt(5,item.getOriginalQuantity());
+            statement.setString(6,item.getVendor());
+            statement.setDouble(7,item.getCost());
+            statement.setString(8,item.getSize());
+            //statement.setString(9,item.getiType().name());
+            statement.executeUpdate();
+            statement.close();
+            url.close();
+            log.logger.info("Successfully added item: "+item.getName()+" to DB");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            log.logger.severe("Failed to added item "+ item.getName()+ " to DB...");
+            e.printStackTrace();
+
+        }
 
     }
 

@@ -3,10 +3,9 @@ package Shop;
 import java.util.Date;
 
 public class Item {
-
     private int id;
     private String name;
-    private String rackNum;
+    private int rackNum;
     private int currentQuantity;
     private int originalQuantity;
     private String barcode;
@@ -14,13 +13,74 @@ public class Item {
     private Date purchaseDate;
     private Date addedDate;
     private String purchaseOrderNo;
+    private String size;
+    private ItemType iType;
     private double cost;
 
+    public Item(){}
 
+
+    public Item(int id, String name, int rackNum, int originalQuantity, String vendor, Date addedDate, String size, double cost, ItemType iType) {
+        this.id = id;
+        this.name = name;
+        this.rackNum = rackNum;
+        this.originalQuantity = this.currentQuantity = originalQuantity;
+        this.vendor = vendor;
+        this.addedDate = addedDate;
+        this.size = size;
+        this.cost = cost;
+        this.iType = iType;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rackNum='" + rackNum + '\'' +
+                ", currentQuantity=" + currentQuantity +
+                ", originalQuantity=" + originalQuantity +
+                ", barcode='" + barcode + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", purchaseDate=" + purchaseDate +
+                ", addedDate=" + addedDate +
+                ", purchaseOrderNo='" + purchaseOrderNo + '\'' +
+                ", size='" + size + '\'' +
+                ", cost=" + cost +
+                '}';
+    }
+
+    public int getRackNum() {
+        return rackNum;
+    }
+
+    public void setRackNum(int rackNum) {
+        this.rackNum = rackNum;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public ItemType getiType() {
+        return iType;
+    }
+
+    public void setiType(ItemType iType) {
+        this.iType = iType;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
 
 
     public void purchase() {
-        currentQuantity--;
+        this.currentQuantity--;
     }
 
     public String getPurchaseOrderNo() {
@@ -71,14 +131,6 @@ public class Item {
         this.id = id;
     }
 
-    public String getrackNum() {
-        return this.rackNum;
-    }
-
-    public void setrackNum(String rackNum) {
-        this.rackNum = rackNum;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -107,9 +159,6 @@ public class Item {
         return this.cost;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
 
     public double getRetail() {
         return this.cost;

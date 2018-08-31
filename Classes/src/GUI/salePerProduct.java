@@ -1,7 +1,13 @@
 package GUI;
 
+import DB.ItemDB;
+import Shop.Item;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.Vector;
 
 
 public class salePerProduct extends JFrame {
@@ -30,21 +36,38 @@ public class salePerProduct extends JFrame {
                 JTextField jDate = new JTextField();
                 JLabel pidLabel = new JLabel();
                 JTextField jTextField1 = new JTextField();
-
                 salePerProFrame.setResizable(true);
                 salePerProFrame.setTitle("Sales Per Day");
 
-                titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); 
+                titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24));
                 titleLabel.setText("Sales Per Product");
 
                 dateLabel.setText("Date");
 
-                viewButton.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+                viewButton.setFont(new java.awt.Font("Tahoma", 0, 14));
                 viewButton.setText("View");
+                viewButton.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        // TODO: 31/08/2018 add box for result when click view 
+                        Item currentItem = new Item();
+                        ItemDB itdb = null;
+                        Vector<String> data = new Vector<>();
+                        try {
+                            itdb = new ItemDB();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        currentItem =itdb.selectItemByID(Integer.parseInt(jTextField1.getText()));
+                        data.add(Integer.toString(currentItem.getId()));
+                        data.add(currentItem.getName());
+
+                    }
+                });
 
                 pidLabel.setText("Product Id");
 
-                jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+                jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14));
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
