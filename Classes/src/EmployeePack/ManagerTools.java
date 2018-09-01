@@ -9,6 +9,8 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 
 public class ManagerTools {
@@ -134,9 +136,10 @@ public class ManagerTools {
         try {
             log.logger.info("Adding item: "+ item.getName() + " to DB...");
             Class.forName(driver);
-            String insert = "INSERT INTO inventory (id, name, rackNum,currentQuantity,originalQuantity, vendor, cost, size)" +
-                    " VALUES(?,?,?,?,?,?,?,?)";
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String insert = "INSERT INTO item (id, name, rackNum,currentQuantity,originalQuantity, vendor, cost, size, arrivalDate) VALUES(?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = url.prepareStatement(insert);
+            Statement st = url.createStatement();
             statement.setInt(1,item.getId());
             statement.setString(2,item.getName());
             statement.setInt(3,item.getRackNum());
@@ -145,6 +148,7 @@ public class ManagerTools {
             statement.setString(6,item.getVendor());
             statement.setDouble(7,item.getCost());
             statement.setString(8,item.getSize());
+            statement.setString(9, dateFormat.format(item.getAddedDate()));
             //statement.setString(9,item.getiType().name());
             statement.executeUpdate();
             statement.close();

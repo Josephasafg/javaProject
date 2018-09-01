@@ -48,7 +48,7 @@ public class Cashier extends Employee {
          try {
              Class.forName(driver);
              PreparedStatement statement = url.prepareStatement
-                     ("DELETE FROM inventory WHERE id=?;");
+                     ("DELETE FROM item WHERE id=?;");
              for(int i=0;i<items.size();i++) {
                  statement.setInt(i, items.get(i).getId());
              }

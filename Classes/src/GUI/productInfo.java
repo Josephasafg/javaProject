@@ -1,7 +1,14 @@
 package GUI;
 
+import DB.ItemDB;
+import Shop.Item;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Vector;
 
 
 public class productInfo extends JFrame {
@@ -25,12 +32,13 @@ public class productInfo extends JFrame {
                 JFrame proInfoFrame = new JFrame();
 
                 JPanel jPanel1 = new JPanel();
+                JTable jTable1 = new JTable();
                 JLabel titleLabel = new JLabel();
                 JLabel pnameLabel = new JLabel();
-                JTextField jTextField1 = new JTextField();
+                JTextField idField = new JTextField();
                 JButton searchButton = new JButton();
                 JScrollPane jScrollPane1 = new JScrollPane();
-                JTable jTable1 = new JTable();
+                jTable1.setFillsViewportHeight(true);
 
                 proInfoFrame.setResizable(true);
                 proInfoFrame.setTitle("Product Information");
@@ -41,7 +49,7 @@ public class productInfo extends JFrame {
                 pnameLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); 
                 pnameLabel.setText("Product ");
 
-                jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+                idField.setFont(new java.awt.Font("Tahoma", 0, 14)); 
 
                 searchButton.setFont(new java.awt.Font("Tahoma", 1, 14)); 
                 searchButton.setForeground(new java.awt.Color(0, 0, 102));
@@ -49,7 +57,24 @@ public class productInfo extends JFrame {
                 searchButton.setText("Search");
                 searchButton.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                       // searchButtonActionPerformed(evt);
+                        Item currentItem = null;
+                        try {
+                            currentItem = new Item();
+                        } catch (IOException | SQLException e) {
+                            e.printStackTrace();
+                        }
+                        Vector<String> data = new Vector<>();
+                        try {
+                            currentItem = currentItem.selectItemID(Integer.parseInt(idField.getText()));
+                        } catch (IOException | SQLException e) {
+                            e.printStackTrace();
+                        }
+                        data.add(Integer.toString(currentItem.getId()));
+                        data.add(currentItem.getName());
+                        data.add(Integer.toString(currentItem.getCurrentQuantity()));
+                        data.add(Double.toString(currentItem.getCost()));
+                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                        model.addRow(data);
                     }
                 });
 
@@ -58,7 +83,7 @@ public class productInfo extends JFrame {
 
                         },
                         new String [] {
-                                "Product Id", "Product Name", "Available", "Mrp"
+                                "Product Id", "Product Name", "Available", "Price"
                         }
                 ));
                 jScrollPane1.setViewportView(jTable1);
@@ -73,7 +98,7 @@ public class productInfo extends JFrame {
                                                         .addGap(68, 68, 68)
                                                         .addComponent(pnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(51, 51, 51)
-                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(56, 56, 56)
                                                         .addComponent(searchButton))
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -93,7 +118,7 @@ public class productInfo extends JFrame {
                                         .addGap(43, 43, 43)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(pnameLabel)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)

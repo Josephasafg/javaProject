@@ -1,7 +1,15 @@
 package GUI;
 
+import EmployeePack.Manager;
+import EmployeePack.ManagerTools;
+import Shop.Item;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Vector;
 
 public class inventoryUpdate extends JFrame {
     public void inventoryUpdate(){
@@ -24,30 +32,32 @@ public class inventoryUpdate extends JFrame {
                 JFrame invUpdateFrame = new JFrame();
 
                 JPanel jPanel1 = new JPanel();
-                JLabel titelLable = new JLabel();
+                JTable jTable2 = new JTable();
+                JLabel titleLable = new JLabel();
                 JLabel pidLable = new JLabel();
                 JLabel quntLable = new JLabel();
                 JLabel nameLable = new JLabel();
                 JLabel mrpLable = new JLabel();
                 JLabel adressLable = new JLabel();
-                JTextField jTextField1 = new JTextField();
-                JTextField jTextField2 = new JTextField();
-                JTextField jTextField3 = new JTextField();
-                JTextField jTextField4 = new JTextField();
+                JTextField prodID = new JTextField();
+                JTextField prodName = new JTextField();
+                JTextField availQuan = new JTextField();
+                JTextField addedQuan = new JTextField();
                 JButton newButton = new JButton();
                 JScrollPane jScrollPane1 = new JScrollPane();
-                JTable jTable2 = new JTable();
+
                 JLabel addedQuantLable = new JLabel();
-                JTextField jTextField5 = new JTextField();
+                JTextField prodCost = new JTextField();
                 JButton updateButton = new JButton();
+                jTable2.setFillsViewportHeight(true);
 
                 adressLable.setText("Address");
 
                 invUpdateFrame.setResizable(true);
                 invUpdateFrame.setTitle("Update Inventory");
 
-                titelLable.setFont(new java.awt.Font("Tahoma", 0, 18)); 
-                titelLable.setText("Update Inventory");
+                titleLable.setFont(new java.awt.Font("Tahoma", 0, 18)); 
+                titleLable.setText("Update Inventory");
 
                 pidLable.setText("Product Id");
 
@@ -55,13 +65,32 @@ public class inventoryUpdate extends JFrame {
 
                 nameLable.setText("Product Name");
 
-                mrpLable.setText("Mrp");
+                mrpLable.setText("Cost");
 
                 //newButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
                 newButton.setText("New");
                 newButton.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                       // newButtonActionPerformed(evt);
+                        ManagerTools managerTools = null;
+                        try {
+                            managerTools = new ManagerTools();
+                            Item currentItem = new Item();
+                            Vector<String> data = new Vector<>();
+                            currentItem.setId(Integer.parseInt(prodID.getText()));
+                            currentItem.setName(prodName.getText());
+                            currentItem.setOriginalQuantity(Integer.parseInt(addedQuan.getText()));
+                            currentItem.setCurrentQuantity(Integer.parseInt(availQuan.getText()));
+                            currentItem.setCost(Integer.parseInt(prodCost.getText()));
+                            // TODO: 01/09/2018 add size to form
+                            managerTools.addItemToInventory(currentItem);
+                            data.add(Integer.toString(currentItem.getId()));
+                            data.add(currentItem.getName());
+                            data.add(Integer.toString(currentItem.getCurrentQuantity()));
+                            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+                            model.addRow(data);
+                        } catch (IOException | SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -112,17 +141,17 @@ public class inventoryUpdate extends JFrame {
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                         .addGap(0, 109, Short.MAX_VALUE)
                                                         .addComponent(updateButton))
-                                                .addComponent(jTextField4)
-                                                .addComponent(jTextField3)
-                                                .addComponent(jTextField2)
-                                                .addComponent(jTextField1)
-                                                .addComponent(jTextField5))
+                                                .addComponent(addedQuan)
+                                                .addComponent(availQuan)
+                                                .addComponent(prodName)
+                                                .addComponent(prodID)
+                                                .addComponent(prodCost))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap())
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(147, 147, 147)
-                                        .addComponent(titelLable, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(titleLable, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
                 jPanel1Layout.setVerticalGroup(
@@ -132,7 +161,7 @@ public class inventoryUpdate extends JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(titelLable, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(titleLable, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(54, 54, 54)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -146,15 +175,15 @@ public class inventoryUpdate extends JFrame {
                                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                                         .addComponent(mrpLable, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(prodID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addGap(13, 13, 13)
-                                                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(prodName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(availQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(addedQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                        .addComponent(prodCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                         .addGap(64, 64, 64)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)

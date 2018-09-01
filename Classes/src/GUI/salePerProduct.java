@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Vector;
 
 
@@ -49,16 +50,31 @@ public class salePerProduct extends JFrame {
                 viewButton.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        // TODO: 31/08/2018 add box for result when click view 
-                        Item currentItem = new Item();
+                        // TODO: 31/08/2018 add box for result when click view
+                        Item currentItem = null;
+                        try {
+                            currentItem = new Item();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         ItemDB itdb = null;
                         Vector<String> data = new Vector<>();
                         try {
                             itdb = new ItemDB();
                         } catch (IOException e) {
                             e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        currentItem =itdb.selectItemByID(Integer.parseInt(jTextField1.getText()));
+                        try {
+                            currentItem =itdb.selectItemByID(Integer.parseInt(jTextField1.getText()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         data.add(Integer.toString(currentItem.getId()));
                         data.add(currentItem.getName());
 

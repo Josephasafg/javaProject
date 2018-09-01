@@ -1,5 +1,9 @@
 package Shop;
 
+import DB.ItemDB;
+
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Item {
@@ -16,11 +20,14 @@ public class Item {
     private String size;
     private ItemType iType;
     private double cost;
+    private ItemDB itemDB = new ItemDB();
 
-    public Item(){}
+    public Item() throws IOException, SQLException {
+        addedDate = new Date();
+    }
 
 
-    public Item(int id, String name, int rackNum, int originalQuantity, String vendor, Date addedDate, String size, double cost, ItemType iType) {
+    public Item(int id, String name, int rackNum, int originalQuantity, String vendor, Date addedDate, String size, double cost, ItemType iType) throws IOException, SQLException {
         this.id = id;
         this.name = name;
         this.rackNum = rackNum;
@@ -30,6 +37,11 @@ public class Item {
         this.size = size;
         this.cost = cost;
         this.iType = iType;
+    }
+
+    public Item selectItemID(int id) throws IOException, SQLException {
+        Item item = itemDB.selectItemByID(id);
+        return item;
     }
 
     @Override
