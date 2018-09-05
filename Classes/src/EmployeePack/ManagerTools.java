@@ -74,7 +74,6 @@ public class ManagerTools {
             url.close();
             log.logger.info("Employee number: "+ employee.getEmpCode()
                     + " was deleted successfully!");
-
         } catch (Exception e) {
             log.logger.severe("Failed to delete employee: #"+ employee.getEmpCode());
             e.printStackTrace();
@@ -97,18 +96,14 @@ public class ManagerTools {
                     currentEmployee = new Seller();
                     currentEmployee.setType(EmployeeTypes.SELLER);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    e.printStackTrace(); }
                 break;
             case "Cashier":
                 try {
                     currentEmployee = new Cashier();
                     currentEmployee.setType(EmployeeTypes.CASHIER);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace(); }
                 break;
         }
         return currentEmployee;
@@ -158,10 +153,7 @@ public class ManagerTools {
             e.printStackTrace();
         } catch (SQLException e) {
             log.logger.severe("Failed to added item "+ item.getName()+ " to DB...");
-            e.printStackTrace();
-
-        }
-
+            e.printStackTrace(); }
     }
 
 

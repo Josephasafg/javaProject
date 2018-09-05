@@ -30,7 +30,7 @@ public class Main {
         //m1.addEmployeeToDB(m1);
         //m1.delEmployeeFromDB(m1);
         //m1.delEmployeeFromDB(e1);
-        Item item = new Item(33,"Boots", 2,19,"Timerbland", new Date(),"13",200.0, ItemType.SHOES);
+        Item item = new Item(66,"Sneakers", 3,6,"Nike", new Date(),"13",200.0, ItemType.SHOES);
 
         m1.addItemToDB(item);
     }

@@ -14,7 +14,9 @@ public class Cashier extends Employee {
     private final Connection url = DriverManager.getConnection
             ("jdbc:mysql://localhost:3306/javaproject", "root", "Gard2325");
 
-    public Cashier() throws IOException, SQLException {}
+    public Cashier() throws IOException, SQLException {
+        setType(EmployeeTypes.CASHIER);
+    }
 
     public Cashier(int id, String firstName, String lastName, double totalHours, int branchNumber, String phone, String password) throws IOException, SQLException {
         super(id, firstName, lastName, totalHours, branchNumber, EmployeeTypes.CASHIER, phone, password);

@@ -1,102 +1,103 @@
 package GUI;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.Random;
 
 import javax.swing.*;
-import java.awt.*;
-
-public class inventoryView extends JFrame {
-    public void inventoryView(){
-        setTitle("SWING");
-
-    }
-
-    public static void main(String[] args){
-        creatAndRunJFrame();
-    }
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
-
-    public static void creatAndRunJFrame(){
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-
-                JFrame invViewFrame = new JFrame();
-
+public class inventoryView extends JInternalFrame {
+    public inventoryView() {
                 JPanel jPanel1 = new JPanel();
                 JLabel titleLabel = new JLabel();
                 JLabel pidLabel = new JLabel();
                 JTextField jTextField1 = new JTextField();
                 JButton viewButton = new JButton();
 
-                invViewFrame.setResizable(true);
-                invViewFrame.setTitle("View Stock");
+                this.setResizable(true);
+                this.setTitle("View Inventory");
 
-                titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); 
+                titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24));
                 titleLabel.setText("View Inventory");
 
                 pidLabel.setText("Product Id");
 
-                viewButton.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+                viewButton.setFont(new java.awt.Font("Tahoma", 0, 14));
                 viewButton.setText("View");
 
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
-                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGap(34, 34, 34)
-                                        .addComponent(pidLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pidLabel, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                                        .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
                                         .addGap(72, 72, 72)
-                                        .addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(viewButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                                         .addGap(33, 33, 33))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(166, 166, 166)
-                                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
                 jPanel1Layout.setVerticalGroup(
-                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(43, 43, 43)
-                                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
                                         .addGap(34, 34, 34)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(pidLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(pidLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(viewButton))
                                         .addContainerGap(330, Short.MAX_VALUE))
                 );
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(invViewFrame.getContentPane());
-                invViewFrame.getContentPane().setLayout(layout);
+                GroupLayout layout = new GroupLayout(this.getContentPane());
+                this.getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 );
                 layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 );
 
-                invViewFrame.pack();
-                invViewFrame.setVisible(true);
+                this.pack();
+                this.setVisible(true);
+                this.setClosable(true);
+                this.setIconifiable(true);
+                this.setMaximizable(true);
+                this.setResizable(true);
+    }
 
-            }
-        });
+
+
+
+    private static void createAndShowUI() {
+        inventoryView frame = new inventoryView();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setResizable(true);
+        frame.setVisible(true);
+
+
 
     }
 
 
+
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowUI();
+            }
+        });
+    }
 }
-
-
-
-
-
-
-
-

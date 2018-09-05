@@ -8,7 +8,6 @@ import java.util.List;
 
 
 public class Branch {
-    //private List<Employee> employeeList;
     //private List<Purchase> salesList;
     private List<Item> stockList;
     private double monthSalary;
@@ -33,9 +32,6 @@ public class Branch {
 
     }
 
-    public void setEmployeeList(/* COMPLETE LATER */) {
-
-    }
 
     public void setStockList(/* COMPLETE LATER */) {
 
