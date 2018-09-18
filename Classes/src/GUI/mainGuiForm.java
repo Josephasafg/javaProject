@@ -90,7 +90,12 @@ public class mainGuiForm extends JFrame {
                 inventoryView iv = new inventoryView();
                 iv.setVisible(true);
                 desktop.add(iv);
-                inventoryUpdate iu  = new inventoryUpdate();
+                inventoryUpdate iu  = null;
+                try {
+                    iu = new inventoryUpdate();
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace();
+                }
                 iu.setVisible(true);
                 desktop.add(iu);
             }
@@ -104,7 +109,11 @@ public class mainGuiForm extends JFrame {
         newSaleButton.setContentAreaFilled(false);
         newSaleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createSale ns = new createSale();
+                createSale ns = null;
+                try {
+                    ns = new createSale();
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace(); }
                 ns.setVisible(true);
                 desktop.add(ns);
             }
@@ -146,7 +155,12 @@ public class mainGuiForm extends JFrame {
         billSearchButton.setContentAreaFilled(false);
         billSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                billSearch bs = new billSearch();
+                billSearch bs = null;
+                try {
+                    bs = new billSearch();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 bs.setVisible(true);
                 desktop.add(bs);
             }
@@ -157,10 +171,19 @@ public class mainGuiForm extends JFrame {
         CustomerButton.setForeground(new java.awt.Color(0, 0, 102));
         //CustomerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
         CustomerButton.setText("Customers");
+        if(!controller.frame1.currentEmp.getType().name().equals("MANAGER") &&
+                !controller.frame1.currentEmp.getType().name().equals("CASHIER")){
+            CustomerButton.setEnabled(false);
+        }
         CustomerButton.setContentAreaFilled(false);
         CustomerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewCustomer anc = new addNewCustomer();
+                addNewCustomer anc = null;
+                try {
+                    anc = new addNewCustomer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 anc.setVisible(true);
                 desktop.add(anc);
             }
@@ -172,6 +195,9 @@ public class mainGuiForm extends JFrame {
         //newEmployeeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
         newEmployeeButton.setText("New Employee");
         newEmployeeButton.setContentAreaFilled(false);
+        if(!controller.frame1.currentEmp.getType().name().equals("MANAGER")){
+            newEmployeeButton.setEnabled(false);
+        }
         newEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewEmployee ane = null;

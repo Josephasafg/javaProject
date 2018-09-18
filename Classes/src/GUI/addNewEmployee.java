@@ -35,6 +35,7 @@ public class addNewEmployee extends JInternalFrame {
         JLabel branchLabel = new JLabel();
         JLabel passLabel = new JLabel();
         JLabel typeLabel = new JLabel();
+        String[] columns = {"Id", "First","Last", "Type", "Branch Number", "Phone#"};
         Connection connect;
         DBSingleton dbSingleton = new DBSingleton();
         connect = dbSingleton.getConn();
@@ -70,7 +71,8 @@ public class addNewEmployee extends JInternalFrame {
         JTextField userLastName = new JTextField();
         JTextField userBranch = new JTextField();
         JTextField temp = new JTextField();
-        JComboBox<String> jComboBox1 = new JComboBox<String>(new String[] {"Manager", "Seller", "Cashier"});
+        JComboBox<String> jComboBox1 = new JComboBox<String>(new String[]
+                {EmployeeTypes.MANAGER.name(), EmployeeTypes.SELLER.name(), EmployeeTypes.CASHIER.name()});
         JButton anew = new JButton();
         JButton update = new JButton();
         JButton del = new JButton();
@@ -126,7 +128,6 @@ public class addNewEmployee extends JInternalFrame {
         anew.setText("Add New");
         anew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // anewActionPerformed(evt);
                 ManagerTools managerTools = null;
                 try {
                     managerTools = new ManagerTools();
@@ -135,31 +136,7 @@ public class addNewEmployee extends JInternalFrame {
                 Employee currentEmployee = null;
 
                 String empType = (String) jComboBox1.getSelectedItem();
-                switch (empType) {
-                    case "Manager":
-                        try {
-                            currentEmployee = new Manager();
-                            currentEmployee.setType(EmployeeTypes.MANAGER);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "Seller":
-                        try {
-                            currentEmployee = new Seller();
-                            currentEmployee.setType(EmployeeTypes.SELLER);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "Cashier":
-                        try {
-                            currentEmployee = new Cashier();
-                            currentEmployee.setType(EmployeeTypes.CASHIER);
-                        } catch (IOException | SQLException e) {
-                            e.printStackTrace(); }
-                        break;
-                }
+                currentEmployee = managerTools.createEmp(empType);
                 currentEmployee.setId(Integer.parseInt(userID.getText()));
                 currentEmployee.setFirstName(userFirstName.getText());
                 currentEmployee.setBranchNumber(Integer.parseInt(userBranch.getText()));
@@ -180,7 +157,6 @@ public class addNewEmployee extends JInternalFrame {
                 data.add(Integer.toString(currentEmployee.getBranchNumber()));
                 data.add(currentEmployee.getPhone());
                 model.addRow(data);
-                // String[][] data ={Integer.toString(currentEmployee.getId()),}
             }
         });
 
@@ -189,7 +165,18 @@ public class addNewEmployee extends JInternalFrame {
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-
+                DefaultTableModel model = new DefaultTableModel();
+                // TODO: 06/09/2018 method is written, need to update GUI form with hours of each employee
+                Employee currentEmployee;
+                ManagerTools managerTools = null;
+                model.setColumnIdentifiers(columns);
+                int i = jTable1.getSelectedRow();
+                if (i >= 0) {
+                    model.setValueAt(userID.getText(),i,0);
+                    model.setValueAt(userFirstName.getText(),i,1);
+                    model.setValueAt(userLastName.getText(),i,2);
+                    model.setValueAt(userPhone.getText(),i,4);
+                }
             }
         });
 
@@ -225,10 +212,7 @@ public class addNewEmployee extends JInternalFrame {
 
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {},
-                new String [] {
-                        "Id", "First","Last", "Type", "Branch Number", "Phone#"}
-        ));
+                new Object [][] {}, columns));
 
         for (Employee anEmployeeList : employeeList) {
             Vector<String> data = new Vector<>();

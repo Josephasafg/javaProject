@@ -86,9 +86,6 @@ public class inventoryView extends JInternalFrame {
         frame.pack();
         frame.setResizable(true);
         frame.setVisible(true);
-
-
-
     }
 
 

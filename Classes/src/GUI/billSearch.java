@@ -1,22 +1,29 @@
 package GUI;
 
+import DB.ItemDB;
+import Shop.Purchase;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 
 
 public class billSearch extends JInternalFrame {
-    public billSearch() {
+    public billSearch() throws IOException {
+        ItemDB itemDB = new ItemDB();
         JPanel jPanel1 = new JPanel();
         JLabel titleLabel = new JLabel();
         JLabel bnoLabel = new JLabel();
-        JTextField jTextField1 = new JTextField();
+        JTextField billSearch = new JTextField();
         JButton searchButton = new JButton();
-        //JScrollPane jScrollPane1 = new JScrollPane();
         JTable jTable1 = new JTable();
 
         JScrollPane jScrollPane1 = new JScrollPane(jTable1);
@@ -25,24 +32,28 @@ public class billSearch extends JInternalFrame {
         titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24));
         titleLabel.setText("Bill Search");
 
-        bnoLabel.setText("Bill No");
+        bnoLabel.setText("Bill No.");
 
         searchButton.setFont(new java.awt.Font("Tahoma", 1, 14));
         searchButton.setForeground(new java.awt.Color(0, 0, 102));
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // searchButtonActionPerformed(evt);
+                Purchase currentPurchase;
+                currentPurchase = itemDB.pullBill(Integer.parseInt(billSearch.getText()));
+                Vector<String> data = new Vector<>();
+                data.add(Integer.toString(currentPurchase.getPid()));
+                data.add(Integer.toString(currentPurchase.getCid()));
+                data.add(currentPurchase.getPrice());
+                data.add(String.valueOf(currentPurchase.getPdate()));
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.addRow(data);
             }
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-                        "Bill No", "Customer Name", "Total Amount", "Date"
-                }
+                new Object [][] {},
+                new String [] {"Bill No", "Customer ID", "Total Amount", "Date"}
         ));
         jScrollPane1.setViewportView(jTable1);
 
@@ -60,7 +71,7 @@ public class billSearch extends JInternalFrame {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(bnoLabel, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(billSearch, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(56, 56, 56)
                                                 .addComponent(searchButton))
                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -76,7 +87,7 @@ public class billSearch extends JInternalFrame {
                                 .addGap(54, 54, 54)
                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(bnoLabel, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(billSearch, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
                                 .addGap(32, 32, 32)
                                 .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 314, GroupLayout.PREFERRED_SIZE)
@@ -104,7 +115,7 @@ public class billSearch extends JInternalFrame {
 
 
 
-    private static void createAndShowUI() {
+    private static void createAndShowUI() throws IOException {
         billSearch frame = new billSearch();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -117,7 +128,11 @@ public class billSearch extends JInternalFrame {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                createAndShowUI();
+                try {
+                    createAndShowUI();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

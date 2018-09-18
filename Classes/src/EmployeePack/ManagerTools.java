@@ -1,6 +1,9 @@
 package EmployeePack;
 
 import ClientPack.Client;
+import ClientPack.NewClient;
+import ClientPack.RegularClient;
+import ClientPack.VIPClient;
 import EmployeePack.Employee;
 import Shop.Branch;
 import Shop.Item;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 
 public class ManagerTools {
@@ -57,7 +61,6 @@ public class ManagerTools {
             log.logger.severe("Could not add employee "+ employee.getFirstName()+
                     " "+ employee.getLastName()+ " to database");
             e.printStackTrace();
-
         }
     }
 
@@ -83,7 +86,7 @@ public class ManagerTools {
     public Employee createEmp(String empType){
         Employee currentEmployee = null;
         switch (empType) {
-            case "Manager":
+            case "MANAGER":
                 try {
                     currentEmployee = new Manager();
                     currentEmployee.setType(EmployeeTypes.MANAGER);
@@ -91,14 +94,14 @@ public class ManagerTools {
                     e.printStackTrace();
                 }
                 break;
-            case "Seller":
+            case "SELLER":
                 try {
                     currentEmployee = new Seller();
                     currentEmployee.setType(EmployeeTypes.SELLER);
                 } catch (IOException e) {
                     e.printStackTrace(); }
                 break;
-            case "Cashier":
+            case "CASHIER":
                 try {
                     currentEmployee = new Cashier();
                     currentEmployee.setType(EmployeeTypes.CASHIER);
@@ -132,7 +135,7 @@ public class ManagerTools {
             log.logger.info("Adding item: "+ item.getName() + " to DB...");
             Class.forName(driver);
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String insert = "INSERT INTO item (id, name, rackNum,currentQuantity,originalQuantity, vendor, cost, size, arrivalDate) VALUES(?,?,?,?,?,?,?,?,?)";
+            String insert = "INSERT INTO item (id, name, rackNum,currentQuantity,originalQuantity, vendor, cost, size, arrivalDate, type) VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = url.prepareStatement(insert);
             Statement st = url.createStatement();
             statement.setInt(1,item.getId());
@@ -144,7 +147,7 @@ public class ManagerTools {
             statement.setDouble(7,item.getCost());
             statement.setString(8,item.getSize());
             statement.setString(9, dateFormat.format(item.getAddedDate()));
-            //statement.setString(9,item.getiType().name());
+            statement.setString(10,item.getiType().name());
             statement.executeUpdate();
             statement.close();
             url.close();
@@ -156,6 +159,82 @@ public class ManagerTools {
             e.printStackTrace(); }
     }
 
+
+
+    public Client createClient(String clientType){
+        Client currentClient = null;
+        switch (clientType) {
+            case "NEW":
+                try {
+                    currentClient = new NewClient();
+                    //currentClient.set(EmployeeTypes.MANAGER);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "REGULAR":
+                try {
+                    currentClient = new RegularClient();
+                    //currentEmployee.setType(EmployeeTypes.SELLER);
+                } catch (IOException e) {
+                    e.printStackTrace(); }
+                break;
+            case "VIP":
+                try {
+                    currentClient = new VIPClient();
+                    //currentEmployee.setType(EmployeeTypes.CASHIER);
+                } catch (IOException e) {
+                    e.printStackTrace(); }
+                break;
+        }
+        return currentClient;
+    }
+
+
+    public void addCustomer(Client client) {
+        try {
+            Class.forName(driver);
+            log.logger.info("Adding Employee "+ client.getFirstName() + " to Database.");
+            String insert = "INSERT INTO client " +
+                    "(customerID, firstName, lastName,phoneNumber,customerNumber, type,discount) VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement statement = url.prepareStatement(insert);
+            Statement st = url.createStatement();
+            statement.setInt(1,client.getCustomerID());
+            statement.setString(2,client.getFirstName());
+            statement.setString(3,client.getLastName());
+            statement.setString(4,client.getPhoneNumber());
+            statement.setInt(5,client.getCustomerNumber());
+            statement.setString(6,client.getcType().name());
+            statement.setDouble(7,client.getDiscount());
+            statement.executeUpdate();
+            statement.close();
+            url.close();
+            log.logger.info("id: "+ client.getCustomerID()+ "\nName: "+client.getFirstName()+
+                    " " + client.getLastName()+"\nEmployee Code: "+ client.getCustomerNumber()+"\n");
+
+        } catch(SQLException | ClassNotFoundException e) {
+            log.logger.severe("Could not add employee "+ client.getFirstName()+
+                    " "+ client.getLastName()+ " to database");
+            e.printStackTrace();
+
+        }
+    }
+
+    public void deleteClient(int id) {
+        try {
+            Class.forName(driver);
+            PreparedStatement statement = url.prepareStatement
+                    ("DELETE FROM client WHERE customerID=?;");
+            statement.setInt(1,id);
+            statement.executeUpdate();
+            statement.close();
+            url.close();
+        } catch (Exception e) {
+            log.logger.severe("Failed to delete Client with ID: " + id);
+            e.printStackTrace();
+        }
+
+    }
 
     public void addBranch(Branch branch) {
         try {

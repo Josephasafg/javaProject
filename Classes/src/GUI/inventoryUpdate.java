@@ -1,12 +1,20 @@
 package GUI;
 
+import ClientPack.Client;
+import DB.DBSingleton;
+import DB.ItemDB;
+import EmployeePack.EmployeeTypes;
 import EmployeePack.ManagerTools;
 import Shop.Item;
+import Shop.ItemType;
+import Utilities.GlobalLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -17,7 +25,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class inventoryUpdate extends JInternalFrame {
-    public inventoryUpdate() {
+    private GlobalLogger log = new GlobalLogger("projectLog.log");
+    private ItemDB itemDB = new ItemDB();
+    public inventoryUpdate() throws IOException, SQLException {
         JPanel jPanel1 = new JPanel();
         JLabel titelLable = new JLabel();
         JLabel pidLable = new JLabel();
@@ -29,17 +39,28 @@ public class inventoryUpdate extends JInternalFrame {
         JTextField prodID = new JTextField();
         JTextField prodName = new JTextField();
         JTextField addedQuan = new JTextField();
-        JTextField prodCost = new JTextField();
+        JTextField availQuan = new JTextField();
         JButton newButton = new JButton();
         //JScrollPane jScrollPane1 = new JScrollPane();
         JTable jTable2 = new JTable();
         JScrollPane jScrollPane1 = new JScrollPane(jTable2);
         jTable2.setFillsViewportHeight(true);
         JLabel addedQuantLable = new JLabel();
-        JTextField availQuan = new JTextField();
+        JTextField prodCost = new JTextField();
         JButton updateButton = new JButton();
-        JComboBox<String> jComboBox1 = new JComboBox<String>(new String[] {"Belt", "Hat", "Pants", "Shirt", "Shoes","Socks"});
+        JComboBox<String> jComboBox1 = new JComboBox<>
+                (new String[] { ItemType.BELT.name(),
+                                ItemType.HAT.name(),
+                                ItemType.PANTS.name(),
+                                ItemType.SHIRT.name(),
+                                ItemType.SHOES.name(),
+                                ItemType.SOCKS.name()});
+
         adressLable.setText("Address");
+        DBSingleton dbSingleton = new DBSingleton();
+        Connection connect = dbSingleton.getConn();
+        ArrayList<Item> itemList = new ArrayList<>();
+        itemList = itemDB.selectAllItems();
 
         this.setResizable(true);
         this.setTitle("Update Inventory");
@@ -66,16 +87,20 @@ public class inventoryUpdate extends JInternalFrame {
                     managerTools = new ManagerTools();
                     Item currentItem = new Item();
                     Vector<String> data = new Vector<>();
+                    String itemType = (String) jComboBox1.getSelectedItem().toString().toUpperCase();
+                    ItemType e = ItemType.valueOf(itemType);
+                    currentItem.setiType(e);
                     currentItem.setId(Integer.parseInt(prodID.getText()));
                     currentItem.setName(prodName.getText());
                     currentItem.setOriginalQuantity(Integer.parseInt(addedQuan.getText()));
+                    
+                    currentItem.setCost(Double.parseDouble(prodCost.getText()));
                     currentItem.setCurrentQuantity(Integer.parseInt(availQuan.getText()));
-                    currentItem.setCost(Integer.parseInt(prodCost.getText()));
                     // TODO: 01/09/2018 add size to form
                     managerTools.addItemToInventory(currentItem);
                     data.add(Integer.toString(currentItem.getId()));
                     data.add(currentItem.getName());
-                    data.add(Integer.toString(currentItem.getCurrentQuantity()));
+                    data.add(Double.toString(currentItem.getCost()));
                     DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
                     model.addRow(data);
                 } catch (IOException | SQLException e) {
@@ -87,7 +112,7 @@ public class inventoryUpdate extends JInternalFrame {
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {},
                 new String [] {
-                        "Product Id", "Product Name", "Available"}));
+                        "Product Id", "Product Name", "Price"}));
 
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -105,6 +130,15 @@ public class inventoryUpdate extends JInternalFrame {
                 // updateButtonActionPerformed(evt);
             }
         });
+
+        for(Item anItemList: itemList) {
+            Vector<String> data = new Vector<>();
+            data.add(Integer.toString(anItemList.getId()));
+            data.add(anItemList.getName());
+            data.add(Double.toString(anItemList.getCost()));
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            model.addRow(data);
+        }
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,11 +163,11 @@ public class inventoryUpdate extends JInternalFrame {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(0, 109, Short.MAX_VALUE)
                                                 .addComponent(updateButton))
-                                        .addComponent(prodCost)
+                                        .addComponent(availQuan)
                                         .addComponent(addedQuan)
                                         .addComponent(prodName)
                                         .addComponent(prodID)
-                                        .addComponent(availQuan)
+                                        .addComponent(prodCost)
                                         .addComponent(jComboBox1, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
@@ -171,9 +205,9 @@ public class inventoryUpdate extends JInternalFrame {
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(addedQuan, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(prodCost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(availQuan, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(prodCost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(typeLabel, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
@@ -207,7 +241,7 @@ public class inventoryUpdate extends JInternalFrame {
 
 
 
-    private static void createAndShowUI() {
+    private static void createAndShowUI() throws IOException, SQLException {
         inventoryUpdate frame = new inventoryUpdate();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -218,12 +252,14 @@ public class inventoryUpdate extends JInternalFrame {
 
     }
 
-
-
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                createAndShowUI();
+                try {
+                    createAndShowUI();
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

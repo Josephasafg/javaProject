@@ -50,7 +50,7 @@ public class salePerProduct extends JInternalFrame {
                 Vector<String> data = new Vector<>();
                 try {
                     itdb = new ItemDB();
-                } catch (IOException | SQLException e) {
+                } catch (IOException e) {
                     e.printStackTrace(); }
 
                 try {

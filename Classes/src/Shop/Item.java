@@ -91,9 +91,11 @@ public class Item {
     }
 
 
-    public void purchase() {
-        this.currentQuantity--;
+    public void purchase(int amount) {
+        this.currentQuantity = this.currentQuantity - amount;
+        itemDB.updateQuantity(this.id, this.currentQuantity);
     }
+
 
     public String getPurchaseOrderNo() {
         return this.purchaseOrderNo;

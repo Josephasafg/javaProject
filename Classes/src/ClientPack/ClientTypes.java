@@ -1,6 +1,6 @@
 package ClientPack;
 
-enum ClientTypes {
+public enum ClientTypes {
     NEW, REGULAR, VIP
 
 }
